@@ -20,8 +20,10 @@ Consequences worth designing around:
 - Settings are keyed to the engine **version series**. Upgrading 4.7 → 4.8 migrates settings
   into a new file, and your theme carries over — but a *fresh* install of a new series starts
   from defaults and needs re-applying.
-- `.tet` files in `text_editor_themes/` are version-independent and survive upgrades, which
-  makes channel 1 the most durable option.
+- `.tet` files in `text_editor_themes/` are version-independent and survive engine upgrades.
+  So **Tools → Nightfox Theme → Install theme files** is the most durable way to keep the
+  syntax colors: they outlive a settings reset, and do not depend on the plugin staying
+  enabled. The UI chrome still has to be re-applied after a fresh major-version install.
 
 ## 1. Git repo (personal / team use)
 
@@ -29,9 +31,12 @@ The repo is already structured for this. To use it on another machine:
 
 ```sh
 git clone <your-remote> gdtheme && cd gdtheme
-./install.sh                       # syntax colors, done
-cp -r addons/nightfox /path/to/a/project/addons/   # optional: UI theming too
+cp -r addons/nightfox /path/to/a/project/addons/
 ```
+
+Then enable the plugin and pick a variant. Since editor settings are global, doing this in
+one project themes them all — there is nothing to install per-machine beyond the addon
+itself.
 
 Tag releases so the Asset Library (and humans) have something stable to point at:
 

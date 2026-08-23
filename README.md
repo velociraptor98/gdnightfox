@@ -14,32 +14,25 @@ Verified against **Godot 4.7.1**.
 
 ## Install
 
-### Option A — syntax colors only, no plugin
-
-```sh
-./install.sh              # copies the .tet files into Godot's theme folder
-./install.sh --uninstall  # removes them again
-```
-
-Then restart Godot and pick a variant under
-**Editor → Editor Settings → Text Editor → Theme → Color Theme**.
-
-Windows (no `sh`): copy `addons/nightfox/themes/*.tet` into `%APPDATA%\Godot\text_editor_themes\`.
-
-### Option B — UI + syntax, via the addon
-
 Copy `addons/nightfox/` into any one project's `addons/` folder, then:
 
 1. **Project → Project Settings → Plugins** → enable **Nightfox Themes**
 2. **Project → Tools → Nightfox Theme → ⟨variant⟩**
 
-This sets the editor's base color, accent, contrast and icon settings *and* all 49 syntax
-colors in one action.
+That's it. The plugin sets the editor's base color, accent, contrast and icon settings *and*
+all 49 syntax colors directly — no files to copy, nothing to restart.
 
-### Option C — Godot Asset Library
+Because editor settings are global, one project is enough for every project.
 
-This repo is Asset Library-shaped already (`addons/` at root, `LICENSE`, `.gitignore`, a
-plugin-local README and license). To publish, see [PACKAGING.md](PACKAGING.md).
+### Optional: the Color Theme dropdown
+
+If you'd rather have the themes listed under **Editor Settings → Text Editor → Theme →
+Color Theme** — useful if you want to keep the themes but *not* keep the plugin enabled —
+use **Tools → Nightfox Theme → Install theme files for the Color Theme menu**. That writes
+the seven `.tet` files into Godot's theme folder (resolved per-platform via `EditorPaths`),
+and **Remove installed theme files** takes them out again.
+
+You can then disable the plugin; the syntax themes stay.
 
 ## Repo layout
 
@@ -48,7 +41,6 @@ plugin-local README and license). To publish, see [PACKAGING.md](PACKAGING.md).
 | `addons/nightfox/` | The distributable addon — this is the only folder users need. |
 | `addons/nightfox/themes/*.tet` | The seven generated syntax themes (canonical copy). |
 | `generator/godot.lua` | Nightfox `extra` generator that produces those `.tet` files. |
-| `install.sh` | Installer for the no-plugin route. |
 | `demo.gd` | Syntax specimen exercising all 49 color keys, each labelled. |
 | `FINDINGS.md` | Why it's built this way, and what Godot does/doesn't allow. |
 | `project.godot` | Sandbox project for testing the addon. |

@@ -13,6 +13,9 @@ const VARIANTS := {
 	"dawnfox":   {"light": true,  "bg": "#faf4ed", "accent": "#286983", "contrast": -0.16, "saturation": 1.0},
 }
 
+const ID_INSTALL := 1000
+const ID_UNINSTALL := 1001
+
 var _menu: PopupMenu
 var _names: PackedStringArray = []
 
@@ -22,7 +25,10 @@ func _enter_tree() -> void:
 	_names = PackedStringArray(VARIANTS.keys())
 	for i in _names.size():
 		_menu.add_item(_names[i], i)
-	_menu.id_pressed.connect(_on_variant_selected)
+	_menu.add_separator()
+	_menu.add_item("Install theme files for the Color Theme menu", ID_INSTALL)
+	_menu.add_item("Remove installed theme files", ID_UNINSTALL)
+	_menu.id_pressed.connect(_on_menu_pressed)
 	add_tool_submenu_item("Nightfox Theme", _menu)
 
 
@@ -33,10 +39,58 @@ func _exit_tree() -> void:
 	_menu = null
 
 
-func _on_variant_selected(id: int) -> void:
-	if id < 0 or id >= _names.size():
-		return
-	apply(_names[id])
+func _on_menu_pressed(id: int) -> void:
+	match id:
+		ID_INSTALL:
+			install_theme_files()
+		ID_UNINSTALL:
+			remove_theme_files()
+		_:
+			if id >= 0 and id < _names.size():
+				apply(_names[id])
+
+
+## Absolute path to the editor's text_editor_themes folder, on any platform.
+func _themes_dir() -> String:
+	return EditorInterface.get_editor_paths().get_config_dir().path_join("text_editor_themes")
+
+
+## Copies the bundled .tet files into Godot's theme folder so they appear under
+## Text Editor > Theme > Color Theme. Only needed to use the themes without this
+## plugin -- applying a variant above already sets every color directly.
+func install_theme_files() -> int:
+	var dest := _themes_dir()
+	var err := DirAccess.make_dir_recursive_absolute(dest)
+	if err != OK and not DirAccess.dir_exists_absolute(dest):
+		push_error("Nightfox: could not create '%s' (error %d)." % [dest, err])
+		return 0
+
+	var n := 0
+	for variant in VARIANTS:
+		var src := "%s/%s.tet" % [THEME_DIR, variant]
+		var out := dest.path_join("%s.tet" % variant)
+		var copy_err := DirAccess.copy_absolute(ProjectSettings.globalize_path(src), out)
+		if copy_err == OK:
+			n += 1
+		else:
+			push_warning("Nightfox: could not copy '%s' (error %d)." % [variant, copy_err])
+
+	print_rich("[color=#719cd6]Nightfox:[/color] installed %d theme file(s) to %s" % [n, dest])
+	if n > 0:
+		print_rich("[color=#738091]Restart Godot, then pick one under Editor Settings > Text Editor > Theme > Color Theme.[/color]")
+	return n
+
+
+## Removes the .tet files this plugin installed. Leaves other themes alone.
+func remove_theme_files() -> int:
+	var dir := _themes_dir()
+	var n := 0
+	for variant in VARIANTS:
+		var f := dir.path_join("%s.tet" % variant)
+		if FileAccess.file_exists(f) and DirAccess.remove_absolute(f) == OK:
+			n += 1
+	print_rich("[color=#719cd6]Nightfox:[/color] removed %d theme file(s) from %s" % [n, dir])
+	return n
 
 
 func apply(variant: String) -> bool:

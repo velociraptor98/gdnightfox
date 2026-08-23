@@ -1,6 +1,22 @@
 @tool
 extends EditorPlugin
 
+# Godot editor-theming notes, learned the hard way:
+#
+# - The UI is NOT fully themeable. Godot generates its chrome procedurally from
+#   base_color + accent_color + contrast, so Nightfox's bg0..bg4 / fg0..fg3 cannot
+#   be mapped onto specific panels. Pick a base and an accent; Godot derives the rest.
+# - interface/theme/icon_and_font_color describes the ICON AND FONT color, not the
+#   theme. 0 Auto, 1 Dark, 2 Light. A dark theme needs 2; a light theme needs 1.
+#   Backwards gives dark text on a dark background -- the base color still looks
+#   correct, so it reads as a palette bug rather than this one setting.
+# - The key is interface/theme/color_preset, not interface/theme/preset. It and
+#   text_editor/theme/color_theme must be set to "Custom" or the editor overwrites
+#   the values applied here.
+# - Light variants need NEGATIVE contrast (~-0.16); positive looks wrong.
+# - Editor settings are global and keyed to the engine version series, so a fresh
+#   major-version install starts from defaults and needs re-applying.
+
 const THEME_DIR := "res://addons/nightfox/themes"
 
 const VARIANTS := {

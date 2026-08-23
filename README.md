@@ -42,7 +42,6 @@ You can then disable the plugin; the syntax themes stay.
 | `addons/nightfox/themes/*.tet` | The seven generated syntax themes (canonical copy). |
 | `generator/godot.lua` | Nightfox `extra` generator that produces those `.tet` files. |
 | `demo.gd` | Syntax specimen exercising all 49 color keys, each labelled. |
-| `FINDINGS.md` | Why it's built this way, and what Godot does/doesn't allow. |
 | `project.godot` | Sandbox project for testing the addon. |
 
 ## Regenerating the themes
@@ -55,6 +54,11 @@ cp ../generator/godot.lua lua/nightfox/extra/godot.lua
 nvim --headless --clean -u misc/extra.lua
 cp extra/*/*.tet ../addons/nightfox/themes/
 ```
+
+## Publishing
+
+See [PACKAGING.md](PACKAGING.md) for the Asset Library submission checklist and the
+upstream nightfox.nvim PR.
 
 ## Known limits
 

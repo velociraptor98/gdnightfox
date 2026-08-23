@@ -1,0 +1,66 @@
+; Nightfox theme for the Godot script editor
+; name: nordfox
+; upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/nordfox/nordfox.tet
+;
+; Install: copy this file into Godot's `text_editor_themes` folder, then pick it
+; under Editor > Editor Settings > Text Editor > Theme > Color Theme.
+;   Linux:   ~/.config/godot/text_editor_themes
+;   macOS:   ~/Library/Application Support/Godot/text_editor_themes
+;   Windows: %APPDATA%\Godot\text_editor_themes
+
+[color_theme]
+
+background_color="2e3440ff"
+text_color="cdcecfff"
+line_number_color="7e8188ff"
+safe_line_number_color="a3be8cff"
+caret_color="c7cdd9ff"
+caret_background_color="232831ff"
+current_line_color="cdcecf0d"
+line_length_guideline_color="444c5eff"
+word_highlighted_color="3e4a5bff"
+selection_color="4f6074ff"
+text_selected_color="00000000"
+code_folding_color="7e8188ff"
+folded_code_region_color="b48ead33"
+search_result_color="3e4a5bff"
+search_result_border_color="4f6074ff"
+
+completion_background_color="232831ff"
+completion_selected_color="3e4a5bff"
+completion_existing_color="4f6074ff"
+completion_scroll_color="7e8188ff"
+completion_scroll_hovered_color="abb1bbff"
+completion_font_color="abb1bbff"
+
+symbol_color="abb1bbff"
+keyword_color="b48eadff"
+control_flow_keyword_color="c895bfff"
+base_type_color="ebcb8bff"
+engine_type_color="93ccdcff"
+user_type_color="d89079ff"
+comment_color="60728aff"
+doc_comment_color="60728aff"
+string_color="a3be8cff"
+string_placeholder_color="f0d399ff"
+number_color="c9826bff"
+function_color="8cafd2ff"
+member_variable_color="81a1c1ff"
+
+brace_mismatch_color="bf616aff"
+mark_color="bf616a38"
+warning_color="ebcb8b26"
+bookmark_color="81a1c1ff"
+breakpoint_color="bf616aff"
+executing_line_color="f0d399ff"
+
+gdscript/function_definition_color="8cafd2ff"
+gdscript/global_function_color="bf616aff"
+gdscript/node_path_color="a3be8cff"
+gdscript/node_reference_color="b1d196ff"
+gdscript/annotation_color="d092ceff"
+gdscript/string_name_color="f0d399ff"
+
+comment_markers/critical_color="bf616aff"
+comment_markers/warning_color="ebcb8bff"
+comment_markers/notice_color="81a1c1ff"

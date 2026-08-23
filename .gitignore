@@ -1,0 +1,12 @@
+# Godot 4+ engine files
+.godot/
+/android/
+
+# Godot-specific ignores
+export.cfg
+export_presets.cfg
+*.translation
+
+# macOS / editor cruft
+.DS_Store
+*.swp

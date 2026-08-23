@@ -1,0 +1,66 @@
+; Nightfox theme for the Godot script editor
+; name: dayfox
+; upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/dayfox/dayfox.tet
+;
+; Install: copy this file into Godot's `text_editor_themes` folder, then pick it
+; under Editor > Editor Settings > Text Editor > Theme > Color Theme.
+;   Linux:   ~/.config/godot/text_editor_themes
+;   macOS:   ~/Library/Application Support/Godot/text_editor_themes
+;   Windows: %APPDATA%\Godot\text_editor_themes
+
+[color_theme]
+
+background_color="f6f2eeff"
+text_color="3d2b5aff"
+line_number_color="824d5bff"
+safe_line_number_color="396847ff"
+caret_color="302b5dff"
+caret_background_color="e4dcd4ff"
+current_line_color="3d2b5a0d"
+line_length_guideline_color="d3c7bbff"
+word_highlighted_color="e7d2beff"
+selection_color="a4c1c2ff"
+text_selected_color="00000000"
+code_folding_color="824d5bff"
+folded_code_region_color="6e33ce33"
+search_result_color="e7d2beff"
+search_result_border_color="a4c1c2ff"
+
+completion_background_color="e4dcd4ff"
+completion_selected_color="e7d2beff"
+completion_existing_color="a4c1c2ff"
+completion_scroll_color="824d5bff"
+completion_scroll_hovered_color="643f61ff"
+completion_font_color="643f61ff"
+
+symbol_color="643f61ff"
+keyword_color="6e33ceff"
+control_flow_keyword_color="5e2bafff"
+base_type_color="ac5402ff"
+engine_type_color="22676dff"
+user_type_color="7f5152ff"
+comment_color="837a72ff"
+doc_comment_color="837a72ff"
+string_color="396847ff"
+string_placeholder_color="924702ff"
+number_color="955f61ff"
+function_color="223d90ff"
+member_variable_color="2848a9ff"
+
+brace_mismatch_color="a5222fff"
+mark_color="a5222f38"
+warning_color="ac540226"
+bookmark_color="2848a9ff"
+breakpoint_color="a5222fff"
+executing_line_color="b86e28ff"
+
+gdscript/function_definition_color="223d90ff"
+gdscript/global_function_color="a5222fff"
+gdscript/node_path_color="396847ff"
+gdscript/node_reference_color="577f63ff"
+gdscript/annotation_color="8b369aff"
+gdscript/string_name_color="924702ff"
+
+comment_markers/critical_color="a5222fff"
+comment_markers/warning_color="ac5402ff"
+comment_markers/notice_color="2848a9ff"

@@ -1,0 +1,66 @@
+; Nightfox theme for the Godot script editor
+; name: carbonfox
+; upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/carbonfox/carbonfox.tet
+;
+; Install: copy this file into Godot's `text_editor_themes` folder, then pick it
+; under Editor > Editor Settings > Text Editor > Theme > Color Theme.
+;   Linux:   ~/.config/godot/text_editor_themes
+;   macOS:   ~/Library/Application Support/Godot/text_editor_themes
+;   Windows: %APPDATA%\Godot\text_editor_themes
+
+[color_theme]
+
+background_color="161616ff"
+text_color="f2f4f8ff"
+line_number_color="7b7c7eff"
+safe_line_number_color="25be6aff"
+caret_color="f9fbffff"
+caret_background_color="0c0c0cff"
+current_line_color="f2f4f80d"
+line_length_guideline_color="353535ff"
+word_highlighted_color="2a2a2aff"
+selection_color="525253ff"
+text_selected_color="00000000"
+code_folding_color="7b7c7eff"
+folded_code_region_color="be95ff33"
+search_result_color="2a2a2aff"
+search_result_border_color="525253ff"
+
+completion_background_color="0c0c0cff"
+completion_selected_color="2a2a2aff"
+completion_existing_color="525253ff"
+completion_scroll_color="7b7c7eff"
+completion_scroll_hovered_color="b6b8bbff"
+completion_font_color="b6b8bbff"
+
+symbol_color="b6b8bbff"
+keyword_color="be95ffff"
+control_flow_keyword_color="c8a5ffff"
+base_type_color="08bdbaff"
+engine_type_color="52bdffff"
+user_type_color="5ae0dfff"
+comment_color="6e6f70ff"
+doc_comment_color="6e6f70ff"
+string_color="25be6aff"
+string_placeholder_color="2dc7c4ff"
+number_color="3ddbd9ff"
+function_color="8cb6ffff"
+member_variable_color="78a9ffff"
+
+brace_mismatch_color="ee5396ff"
+mark_color="ee539638"
+warning_color="be95ff26"
+bookmark_color="78a9ffff"
+breakpoint_color="ee5396ff"
+executing_line_color="2dc7c4ff"
+
+gdscript/function_definition_color="8cb6ffff"
+gdscript/global_function_color="ee5396ff"
+gdscript/node_path_color="25be6aff"
+gdscript/node_reference_color="46c880ff"
+gdscript/annotation_color="ff91c1ff"
+gdscript/string_name_color="2dc7c4ff"
+
+comment_markers/critical_color="ee5396ff"
+comment_markers/warning_color="be95ffff"
+comment_markers/notice_color="78a9ffff"

@@ -1,25 +1,6 @@
 @tool
 extends EditorPlugin
 
-# Godot editor-theming notes, learned the hard way:
-#
-# - The UI is NOT fully themeable. Godot generates its chrome procedurally from
-#   base_color + accent_color + contrast, so Nightfox's bg0..bg4 / fg0..fg3 cannot
-#   be mapped onto specific panels. Pick a base and an accent; Godot derives the rest.
-# - interface/theme/icon_and_font_color describes the ICON AND FONT color, not the
-#   theme. 0 Auto, 1 Dark, 2 Light. A dark theme needs 2; a light theme needs 1.
-#   Backwards gives dark text on a dark background -- the base color still looks
-#   correct, so it reads as a palette bug rather than this one setting.
-# - The key is interface/theme/color_preset, not interface/theme/preset. It and
-#   text_editor/theme/color_theme must be set to "Custom" or the editor overwrites
-#   the values applied here.
-# - Light variants need NEGATIVE contrast (~-0.16); positive looks wrong.
-# - Editor settings are global and keyed to the engine version series, so a fresh
-#   major-version install starts from defaults and needs re-applying.
-# - Keep every local's type concrete. A `var x := f()` where f returns Variant trips
-#   INFERRED_DECLARATION, and plenty of projects promote GDScript warnings to errors --
-#   the addon then fails to parse in *their* project while it parses fine here.
-
 const THEME_DIR := "res://addons/nightfox/themes"
 
 const VARIANTS := {
@@ -69,14 +50,10 @@ func _on_menu_pressed(id: int) -> void:
 				apply(_names[id])
 
 
-## Absolute path to the editor's text_editor_themes folder, on any platform.
 func _themes_dir() -> String:
 	return EditorInterface.get_editor_paths().get_config_dir().path_join("text_editor_themes")
 
 
-## Copies the bundled .tet files into Godot's theme folder so they appear under
-## Text Editor > Theme > Color Theme. Only needed to use the themes without this
-## plugin -- applying a variant above already sets every color directly.
 func install_theme_files() -> int:
 	var dest := _themes_dir()
 	var err := DirAccess.make_dir_recursive_absolute(dest)
@@ -100,7 +77,6 @@ func install_theme_files() -> int:
 	return n
 
 
-## Removes the .tet files this plugin installed. Leaves other themes alone.
 func remove_theme_files() -> int:
 	var dir := _themes_dir()
 	var n := 0
@@ -158,13 +134,10 @@ func _apply_syntax(settings: EditorSettings, variant: String) -> bool:
 	return true
 
 
-## True if `value` is an `rrggbbaa` string (Godot's .tet format), `#` optional.
 func _is_rgba(value: String) -> bool:
 	var hex := value.strip_edges().trim_prefix("#")
 	return hex.length() == 8 and hex.is_valid_hex_number()
 
 
-## Parses an `rrggbbaa` string into a Color. Guard with `_is_rgba()` first --
-## an unchecked value falls back to black rather than reporting the problem.
 func _parse_rgba(value: String) -> Color:
 	return Color.from_string("#" + value.strip_edges().trim_prefix("#"), Color.BLACK)

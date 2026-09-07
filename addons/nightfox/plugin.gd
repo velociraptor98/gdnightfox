@@ -16,6 +16,9 @@ extends EditorPlugin
 # - Light variants need NEGATIVE contrast (~-0.16); positive looks wrong.
 # - Editor settings are global and keyed to the engine version series, so a fresh
 #   major-version install starts from defaults and needs re-applying.
+# - Keep every local's type concrete. A `var x := f()` where f returns Variant trips
+#   INFERRED_DECLARATION, and plenty of projects promote GDScript warnings to errors --
+#   the addon then fails to parse in *their* project while it parses fine here.
 
 const THEME_DIR := "res://addons/nightfox/themes"
 
@@ -39,7 +42,7 @@ var _names: PackedStringArray = []
 func _enter_tree() -> void:
 	_menu = PopupMenu.new()
 	_names = PackedStringArray(VARIANTS.keys())
-	for i in _names.size():
+	for i: int in _names.size():
 		_menu.add_item(_names[i], i)
 	_menu.add_separator()
 	_menu.add_item("Install theme files for the Color Theme menu", ID_INSTALL)
@@ -82,7 +85,7 @@ func install_theme_files() -> int:
 		return 0
 
 	var n := 0
-	for variant in VARIANTS:
+	for variant: String in VARIANTS:
 		var src := "%s/%s.tet" % [THEME_DIR, variant]
 		var out := dest.path_join("%s.tet" % variant)
 		var copy_err := DirAccess.copy_absolute(ProjectSettings.globalize_path(src), out)
@@ -101,7 +104,7 @@ func install_theme_files() -> int:
 func remove_theme_files() -> int:
 	var dir := _themes_dir()
 	var n := 0
-	for variant in VARIANTS:
+	for variant: String in VARIANTS:
 		var f := dir.path_join("%s.tet" % variant)
 		if FileAccess.file_exists(f) and DirAccess.remove_absolute(f) == OK:
 			n += 1
@@ -144,22 +147,24 @@ func _apply_syntax(settings: EditorSettings, variant: String) -> bool:
 		push_error("Nightfox: '%s' has no [color_theme] section." % path)
 		return false
 
-	for key in cfg.get_section_keys("color_theme"):
+	for key: String in cfg.get_section_keys("color_theme"):
 		var raw := str(cfg.get_value("color_theme", key))
-		var color := _parse_rgba(raw)
-		if color == null:
+		if not _is_rgba(raw):
 			push_warning("Nightfox: skipping malformed color '%s' for key '%s'." % [raw, key])
 			continue
-		settings.set_setting("text_editor/theme/highlighting/%s" % key, color)
+		settings.set_setting("text_editor/theme/highlighting/%s" % key, _parse_rgba(raw))
 
 	settings.set_setting("text_editor/theme/color_theme", "Custom")
 	return true
 
 
-## Parses an `rrggbbaa` string (Godot's .tet format) into a Color.
-## Returns null if the value is not 8 hex digits.
-func _parse_rgba(value: String) -> Variant:
+## True if `value` is an `rrggbbaa` string (Godot's .tet format), `#` optional.
+func _is_rgba(value: String) -> bool:
 	var hex := value.strip_edges().trim_prefix("#")
-	if hex.length() != 8 or not hex.is_valid_hex_number():
-		return null
-	return Color.from_string("#" + hex, Color.BLACK)
+	return hex.length() == 8 and hex.is_valid_hex_number()
+
+
+## Parses an `rrggbbaa` string into a Color. Guard with `_is_rgba()` first --
+## an unchecked value falls back to black rather than reporting the problem.
+func _parse_rgba(value: String) -> Color:
+	return Color.from_string("#" + value.strip_edges().trim_prefix("#"), Color.BLACK)

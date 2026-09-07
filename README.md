@@ -12,12 +12,19 @@ Verified against **Godot 4.7.1**.
 Download the repo zip (**Code → Download ZIP**, or a release's *Source code (zip)*), then
 in the project you want it in:
 
-1. **AssetLib → Import…** → pick the zip → **Install**
-2. **Project → Project Settings → Plugins** → enable **Nightfox Themes**
-3. **Project → Tools → Nightfox Theme → ⟨variant⟩**
+1. **AssetLib → Import…** → pick the zip
+2. In the install dialog, make sure **Ignore asset root** is ticked, so the tree shows
+   `addons/nightfox/…` and not `gdnightfox-main/addons/nightfox/…` → **Install**
+3. **Project → Project Settings → Plugins** → enable **Nightfox Themes**
+4. **Project → Tools → Nightfox Theme → ⟨variant⟩**
+
+Step 2 matters: Godot only scans `res://addons/` for plugins, so an addon left one folder
+deeper never reaches the Plugins tab. It also sits outside the path that
+`debug/gdscript/warnings/exclude_addons` covers, which is what turns GDScript warnings into
+hard parse errors for it.
 
 The zip contains only `addons/nightfox/`, so the installer has nothing to overwrite. Or copy
-the folder in by hand and skip to step 2:
+the folder in by hand and skip to step 3:
 
 ```sh
 git clone <this-repo> gdtheme

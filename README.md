@@ -9,21 +9,27 @@ Verified against **Godot 4.7.1**.
 
 ## Setup
 
+Download the repo zip (**Code → Download ZIP**, or a release's *Source code (zip)*), then
+in the project you want it in:
+
+1. **AssetLib → Import…** → pick the zip → **Install**
+2. **Project → Project Settings → Plugins** → enable **Nightfox Themes**
+3. **Project → Tools → Nightfox Theme → ⟨variant⟩**
+
+The zip contains only `addons/nightfox/`, so the installer has nothing to overwrite. Or copy
+the folder in by hand and skip to step 2:
+
 ```sh
 git clone <this-repo> gdtheme
 cp -r gdtheme/addons/nightfox /path/to/your/project/addons/
 ```
 
-Then in Godot:
-
-1. **Project → Project Settings → Plugins** → enable **Nightfox Themes**
-2. **Project → Tools → Nightfox Theme → ⟨variant⟩**
-
 That's it. The plugin sets the editor's base color, accent, contrast and icon settings *and*
 all 49 syntax colors directly — no files to copy, nothing to restart.
 
-No project handy? Open `gdtheme/` itself in Godot — it *is* a project, with the addon already
-in place. Enable it, apply a variant, done.
+No project handy? `git clone` the repo and open `gdtheme/` itself in Godot — the clone *is* a
+project, with the addon already in place. Enable it, apply a variant, done. (The zip has no
+`project.godot`; that's deliberate, see below.)
 
 > **You only ever do this once.** Godot's editor settings are global — they live in
 > `~/Library/Application Support/Godot/editor_settings-<version>.tres` on macOS,
@@ -49,11 +55,17 @@ colors persist, the UI chrome needs re-applying.
 
 | Path | What it is |
 | --- | --- |
-| `addons/nightfox/` | The addon — this is the only folder you need to copy. |
+| `addons/nightfox/` | The addon — the only folder you need, and the only one in the zip. |
 | `addons/nightfox/themes/*.tet` | The seven generated syntax themes (canonical copy). |
 | `generator/godot.lua` | Nightfox `extra` generator that produces those `.tet` files. |
 | `demo.gd` | Syntax specimen exercising all 49 color keys, each labelled. |
 | `project.godot` | Makes this repo a Godot project, so you can test the addon in place. |
+
+Everything except `addons/nightfox/` is marked `export-ignore` in `.gitattributes`, so it is
+present in a clone but absent from every archive GitHub generates. Godot's asset installer
+strips the zip's single top-level folder and writes the remainder into `res://` with no
+special case for `project.godot` — anything left at archive root would overwrite the target
+project's file of that name.
 
 ## Regenerating the themes
 

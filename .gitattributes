@@ -1,4 +1,14 @@
-# Keep development-only files out of the Asset Library zip
+# Keep everything but addons/nightfox/ out of the archives GitHub generates
+# (`git archive`, the release "Source code (zip)", /archive/*.zip).
+#
+# That zip is what people feed to Godot's asset installer, which strips the single
+# top-level folder and writes the rest into res:// verbatim -- it has no special
+# case for project.godot. Anything left at archive root therefore OVERWRITES the
+# target project's file of that name. addons/nightfox/ carries its own README and
+# LICENSE, so the installed tree stays self-describing.
+/project.godot      export-ignore
+/README.md          export-ignore
+/LICENSE            export-ignore
 /demo.gd            export-ignore
 /demo.gd.uid        export-ignore
 /generator          export-ignore

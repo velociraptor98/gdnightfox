@@ -1,40 +1,53 @@
 # Nightfox for Godot
 
-The [Nightfox](https://github.com/EdenEast/nightfox.nvim) palette for the Godot editor,
-covering the UI and the script editor.
+The [Nightfox](https://github.com/EdenEast/nightfox.nvim) palette for the Godot editor —
+both the UI chrome and the script editor. Tested on Godot 4.7.1.
 
-Seven variants: `nightfox`, `duskfox`, `nordfox`, `terafox`, `carbonfox`, and the light
-`dayfox` and `dawnfox`. Tested on Godot 4.7.1.
+Five dark variants:
+
+|  |  |
+| --- | --- |
+| `nightfox`<br>![nightfox](docs/screenshots/nightfox.png) | `duskfox`<br>![duskfox](docs/screenshots/duskfox.png) |
+| `nordfox`<br>![nordfox](docs/screenshots/nordfox.png) | `terafox`<br>![terafox](docs/screenshots/terafox.png) |
+| `carbonfox`<br>![carbonfox](docs/screenshots/carbonfox.png) | |
+
+Two light:
+
+|  |  |
+| --- | --- |
+| `dayfox`<br>![dayfox](docs/screenshots/dayfox.png) | `dawnfox`<br>![dawnfox](docs/screenshots/dawnfox.png) |
 
 ## Install
 
 Download the repo zip, then in Godot:
 
-1. AssetLib → Import, pick the zip, tick **Ignore asset root**, Install.
-2. Project Settings → Plugins → enable Nightfox Themes.
-3. Tools → Nightfox Theme → pick a variant.
+1. **AssetLib → Import**, pick the zip, tick **Ignore asset root**, **Install**.
+2. **Project Settings → Plugins** → enable **Nightfox Themes**.
+3. **Project → Tools → Nightfox Theme** → pick a variant.
 
-Ignoring the asset root matters. Godot only finds plugins in `res://addons/`, so the addon
-has to land there rather than a folder deeper.
+Ignoring the asset root matters: Godot only finds plugins directly under `res://addons/`.
+Copying `addons/nightfox/` in by hand works too — start at step 2.
 
-Copying `addons/nightfox/` into your project by hand works just as well; start at step 2.
+Editor settings are global, so one install themes every project you open.
 
-Editor settings are global, so you only do this once. Applying a variant in one project
-themes every project you open.
+## Themes without the plugin
 
-## Keeping the themes without the plugin
-
-Tools → Nightfox Theme → Install theme files copies the seven `.tet` files into Godot's theme
-folder, where they appear under Editor Settings → Text Editor → Theme → Color Theme. You can
-disable the plugin afterwards and keep the syntax colors. Remove installed theme files undoes
-it.
+**Tools → Nightfox Theme → Install theme files for the Color Theme menu** copies the seven
+`.tet` files into Godot's theme folder. Restart, and they appear under **Editor Settings →
+Text Editor → Theme → Color Theme**; the plugin can then be disabled. **Remove installed
+theme files** deletes only those seven.
 
 Worth doing: `.tet` files survive engine upgrades, while editor settings are tied to the
-version series, so a fresh install of a new series needs the UI colors re-applying.
+version series, so a new series needs the UI colors re-applying.
 
-## Regenerating the themes
+## Reverting
 
-`generator/godot.lua` is a Nightfox `extra` generator that produces the `.tet` files in
+Set **Editor Settings → Interface → Theme → Preset** back to `Default`, and **Text Editor →
+Theme → Color Theme** back to `Default`.
+
+## Regenerating
+
+`generator/godot.lua` is a Nightfox `extra` generator that writes the `.tet` files in
 `addons/nightfox/themes/`.
 
 ```sh
@@ -51,9 +64,9 @@ This repo is itself a Godot project, so you can enable the addon here and test i
 
 ## Limits
 
-Godot generates its UI from a base color, an accent and a contrast value rather than a full
-color file, so the UI is a close match, not an exact port. The script editor is exact: all 49
-keys are set.
+The script editor is an exact port — all 49 keys are set. The UI is a close match, not an
+exact one: Godot derives its chrome from a base color, an accent and a contrast value
+rather than a full color file.
 
 ## Credits
 
